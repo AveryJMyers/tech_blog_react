@@ -1,0 +1,12 @@
+[
+    {
+      "content": "This is a comment on the first blog post.",
+      "author": 2,
+      "associatedPost": 1
+    },
+    {
+      "content": "This is a comment on the second blog post.",
+      "author": 1,
+      "associatedPost": 2
+    }
+]

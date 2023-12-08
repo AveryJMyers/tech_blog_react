@@ -1,0 +1,79 @@
+<div class="center-div" id="feedDiv"> 
+  <div class="card text-center createBlog">
+    <div class="card-body">
+      <h5 class="card-title">Write A Blog Post Now!</h5>
+      <form id="blogForm" method="post" action="/api/blog">
+        <input type="text" id="blogTitle" class="form-control" placeholder="Blog Post Title" name="title">
+        <textarea class="form-control" id="blogContent" rows="5" placeholder="What's on your mind?" name="content"></textarea>
+        <button type="submit" class="btn btn-primary" id="signInButton">Post Blog</button>
+      </form>
+    </div>     
+  </div>
+</div>
+
+
+
+{{#each myBlogs}}
+<section id="feedDiv">
+  <div class="card text-center" id="feedCards">
+    <h3>{{title}}</h3>
+    <h5 class="card-subtitle mb-2 text-muted">By: YOU!</h5>
+    <p class="card-text content">{{content}}</p>
+     <div class="card-footer text-muted">
+      Posted: {{format_date date_posted}}
+      </div>
+    {{#each comments}}
+      <div class="card-footer comments">
+        {{this.content}} - {{this.author}}
+      </div>
+      {{else}}
+      <div>No Comments yet</div>
+    {{/each}}
+    <div class="card-footer">
+     <button type="button" class="btn btn-primary edit-button" data-toggle="modal" data-target="#editModal" data-blog-id="{{id}}">
+        Edit
+      </button>
+      <form method="post" action="/api/blog/delete/{{id}}">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit Blog Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+     <div class="modal-body">
+  <!-- Edit form fields -->
+    <form id="editForm" method="POST" action="/api/blog/edit/{{id}}">
+      <!-- Add a hidden input field for the method override -->
+      <input type="hidden" name="_method" value="PUT">
+      <div class="form-group">
+        <label for="editTitle">Edit Title</label>
+        <input type="text" id="editTitle" class="form-control" value="{{title}}" name="title">
+      </div>
+      <div class="form-group">
+        <label for="editContent">Edit Content</label>
+        <textarea class="form-control" id="editContent" rows="5" name="content">{{content}}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+    </form>
+  </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="submit" form="editForm" class="btn btn-primary">Save Changes</button>
+    </div>
+  </div>
+</div>
+</div>
+
+{{else}}
+  <div>NO BLOGS YET</div>
+{{/each}}
+
+
