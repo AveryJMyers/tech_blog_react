@@ -3,3 +3,4 @@ CREATE DATABASE IF NOT EXISTS tech_db;
 
 USE tech_db;
 
+ 
